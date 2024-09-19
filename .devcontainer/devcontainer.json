@@ -1,0 +1,40 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go-postgres
+{
+	"name": "HelloGo Go, NPM, Postgres container",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [8080, 5432],
+
+	// Docker-from-Docker recommendations
+ 	// Per https://github.com/microsoft/vscode-dev-containers/tree/main/containers/docker-from-docker
+	"overrideCommand": false,
+	"remoteUser": "vscode",
+	"mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" // Binding the host docker socket to the container
+	],
+	// End of Docker-from-Docker recommendations
+	"containerEnv": {
+		"POSTGRES_USER": "hellogo",
+		"POSTGRES_PASSWORD": "hellogo",
+		"POSTGRES_DB": "hellogo",
+		"POSTGRES_HOST": "db"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+	"postAttachCommand": "yarn --cwd /workspaces/hellogo/web install && yarn --cwd /workspaces/hellogo/web run build",
+	"customizations": {
+		"vscode": {
+			"extensions": ["golang.go", "cweijan.vscode-postgresql-client2", "bradlc.vscode-tailwindcss"],
+			"settings": {
+				"workbench.editor.customLabels.patterns": {
+					"**/*.go": "${dirname}/${filename}.${extname}"
+				}
+			}
+		}
+	}
+}
