@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/jeffrpowell/hellogo/internal/constants"
-	//_ "github.com/jeffrpowell/hellogo/internal/database" //blank import to run init()
+	_ "github.com/jeffrpowell/hellogo/internal/database" //blank import to run init()
 	_ "github.com/jeffrpowell/hellogo/internal/handlers" //blank import to run init()
 )
 
