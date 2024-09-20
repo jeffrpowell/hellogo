@@ -8,7 +8,7 @@ This repo contains all of the example code mentioned in a companion blog post wh
 * API middleware pattern
 * A Dev container to get to coding quick, even if you haven't installed Go before (or NPM, or Postgres, or...)
 * A GitHub Action workflow to release and publish your code. 
-    * `docker pull ghcr.io/jeffrpowell/hellogo:v1.0`
+    * `docker pull ghcr.io/jeffrpowell/hellogo:v1.1`
 
 ## Quick start
 1. Install Docker, VS Code, and the Dev Containers extension in VS Code
