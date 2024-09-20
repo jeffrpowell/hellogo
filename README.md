@@ -7,6 +7,8 @@ This repo contains all of the example code mentioned in a companion blog post wh
 * Server-side templating using Go's `html/template` package
 * API middleware pattern
 * A Dev container to get to coding quick, even if you haven't installed Go before (or NPM, or Postgres, or...)
+* A GitHub Action workflow to release and publish your code. 
+    * `docker pull ghcr.io/jeffrpowell/hellogo:v1.0`
 
 ## Quick start
 1. Install Docker, VS Code, and the Dev Containers extension in VS Code
@@ -27,3 +29,5 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA hellogo TO hellogo;
 ```
 4. Head to the `Run and Debug` tab in VSCode and click on the triangle button to run your server.
 5. [https://localhost:8080/hello](https://localhost:8080/hello)
+
+## Quicker start
