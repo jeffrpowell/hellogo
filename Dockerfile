@@ -1,5 +1,5 @@
 # Use the official Go image to create a build container
-FROM golang:1.22-bookworm AS builder
+FROM golang:1.23-bookworm AS builder
 
 WORKDIR /workspaces/hellogo
 
@@ -36,7 +36,7 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Copy the built executable from the previous stage
-COPY --from=builder /workspaces/listaway/bin/hellogo .
+COPY --from=builder /workspaces/hellogo/bin/hellogo .
 
 EXPOSE 8080
 
