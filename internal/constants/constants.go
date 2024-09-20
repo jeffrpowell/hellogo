@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 )
 
 // Registered environment vars
@@ -17,10 +18,26 @@ const (
 )
 
 // Handler consts
-const defaultPort string = "8080"
+const (
+	ENV_AUTH_KEY        string = "HELLOGO_AUTH_KEY"
+	COOKIE_NAME_SESSION string = "session"
+	defaultPort         string = "8080"
+)
 
-var PORT string = loadEnvWithDefault(ENV_PORT, defaultPort)
-var ROUTER *mux.Router = mux.NewRouter()
+var (
+	authKey                            = []byte(os.Getenv(ENV_AUTH_KEY)) // key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
+	COOKIE_STORE *sessions.CookieStore = sessions.NewCookieStore(authKey)
+	PORT         string                = loadEnvWithDefault(ENV_PORT, defaultPort)
+	ROUTER       *mux.Router           = mux.NewRouter()
+)
+
+func init() {
+	maxAge := 86400 * 7 // 7 days
+	COOKIE_STORE.MaxAge(maxAge)
+	COOKIE_STORE.Options.Path = "/"
+	COOKIE_STORE.Options.HttpOnly = true
+	COOKIE_STORE.Options.Secure = false
+}
 
 func loadEnvWithDefault(key string, defaultValue string) string {
 	val := os.Getenv(key)

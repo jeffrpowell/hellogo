@@ -116,3 +116,21 @@ func HelloWorldPage(w io.Writer, params helloWorldParams) {
 		log.Print(err)
 	}
 }
+
+// the following code is stubbed to allow for the example handler code to build
+
+func LoginPage(w io.Writer) {
+
+}
+func ListsPageParams(lists []string, isAdmin bool) string {
+	return ""
+}
+func ListsPage(w io.Writer, params string) {
+
+}
+func EditListParams(list string, isAdmin bool) string {
+	return ""
+}
+func EditListPage(w io.Writer, params string) {
+
+}

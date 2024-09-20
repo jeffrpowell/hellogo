@@ -5,12 +5,13 @@ import (
 
 	"github.com/jeffrpowell/hellogo/internal/constants"
 	"github.com/jeffrpowell/hellogo/internal/database"
+	"github.com/jeffrpowell/hellogo/internal/handlers/middleware"
 	"github.com/jeffrpowell/hellogo/web"
 )
 
 func init() {
-	constants.ROUTER.HandleFunc("/", helloWorldGET).Methods("GET")
-	constants.ROUTER.HandleFunc("/hello", helloWorldPage).Methods("GET")
+	constants.ROUTER.HandleFunc("/", middleware.DefaultPublicMiddlewareChain(helloWorldGET)).Methods("GET")
+	constants.ROUTER.HandleFunc("/hello", middleware.DefaultPublicMiddlewareChain(helloWorldPage)).Methods("GET")
 }
 
 func helloWorldGET(w http.ResponseWriter, r *http.Request) {
