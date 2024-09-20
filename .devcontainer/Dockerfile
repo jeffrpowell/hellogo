@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/devcontainers/go:1.23-bookworm
+# M# Macs will want to swap the target platform: FROM --platform=linux/arm64 mcr.microsoft.com/devcontainers/go:1.23-bookworm
+FROM --platform=linux/amd64 mcr.microsoft.com/devcontainers/go:1.23-bookworm
 
 # ------------ Docker-from-docker ---------------------------
 # Add Docker's official GPG key:
