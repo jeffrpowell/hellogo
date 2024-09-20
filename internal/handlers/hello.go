@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/jeffrpowell/hellogo/internal/constants"
+	"github.com/jeffrpowell/hellogo/internal/database"
 	"github.com/jeffrpowell/hellogo/web"
 )
 
@@ -18,10 +19,18 @@ func helloWorldGET(w http.ResponseWriter, r *http.Request) {
 
 func helloWorldPage(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
-	param := "name"
-	if values, ok := query[param]; ok && len(values) > 0 {
-		web.HelloWorldPage(w, web.HelloWorldParams(values[0]))
-	} else {
-		web.HelloWorldPage(w, web.HelloWorldParams("World"))
+	var name = "World"
+	if values, ok := query["name"]; ok && len(values) > 0 {
+		name = values[0]
 	}
+	var gradientName = "Foothill sunrise"
+	if values, ok := query["gradient"]; ok && len(values) > 0 {
+		gradientName = values[0]
+	}
+	gradient, err := database.GetGradient(gradientName)
+	if err != nil {
+		gradient = constants.ColorGradient{}
+	}
+	params := web.HelloWorldParams(name, gradient)
+	web.HelloWorldPage(w, params)
 }

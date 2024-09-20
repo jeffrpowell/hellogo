@@ -8,6 +8,7 @@ import (
 	"mime"
 	"net/http"
 	"path/filepath"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/jeffrpowell/hellogo/internal/constants"
@@ -18,7 +19,7 @@ import (
 //go:embed dist/*
 var staticFiles embed.FS
 var (
-	helloWorld = parseTemplate("dist/helloworld.html")
+	helloWorld = parseTemplate("dist/helloworld.html", template.FuncMap{"join": strings.Join})
 )
 
 func init() {
@@ -55,7 +56,7 @@ func staticHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func minifyTemplates(filenames ...string) (*template.Template, error) {
+func minifyTemplates(funcs template.FuncMap, filenames ...string) (*template.Template, error) {
 	m := minify.New()
 	m.AddFunc("text/html", html.Minify)
 
@@ -63,7 +64,7 @@ func minifyTemplates(filenames ...string) (*template.Template, error) {
 	for _, filename := range filenames {
 		name := filepath.Base(filename)
 		if tmpl == nil {
-			tmpl = template.New(name)
+			tmpl = template.New(name).Funcs(funcs)
 		}
 
 		b, err := staticFiles.ReadFile(filename)
@@ -84,8 +85,8 @@ func minifyTemplates(filenames ...string) (*template.Template, error) {
 	return tmpl, nil
 }
 
-func parseTemplate(file string) *template.Template {
-	return template.Must(minifyTemplates("dist/root.html", file))
+func parseTemplate(file string, funcs template.FuncMap) *template.Template {
+	return template.Must(minifyTemplates(funcs, "dist/root.html", file))
 }
 
 type globalWebParams struct {
@@ -96,15 +97,17 @@ type globalWebParams struct {
 
 type helloWorldParams struct {
 	globalWebParams
-	Name string
+	Name   string
+	Colors []string
 }
 
-func HelloWorldParams(name string) helloWorldParams {
+func HelloWorldParams(name string, gradient constants.ColorGradient) helloWorldParams {
 	return helloWorldParams{
 		globalWebParams{
 			JsFile: "helloworld",
 		},
 		name,
+		gradient.Colors,
 	}
 }
 
