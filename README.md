@@ -29,5 +29,3 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA hellogo TO hellogo;
 ```
 4. Head to the `Run and Debug` tab in VSCode and click on the triangle button to run your server.
 5. [https://localhost:8080/hello](https://localhost:8080/hello)
-
-## Quicker start
