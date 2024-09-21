@@ -1,6 +1,6 @@
 # HelloGo - A Blueprint for a Full-stack Go Web Application
 
-This repo contains all of the example code mentioned in a companion blog post which lays the foundation for a full-stack Go web application. It sports many features out of the box:
+This repo contains all of the example code mentioned in a [companion blog post](https://medium.com/@jeffpowell.dev/blueprint-for-a-full-stack-go-web-application-9633d25b9e2e) which lays the foundation for a full-stack Go web application. It sports many features out of the box:
 
 * Connection to a Postgres database backend
 * Full NPM-powered embedded front-end project
